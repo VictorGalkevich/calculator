@@ -36,12 +36,12 @@ double tg(double x) {
     return (Sin(x) / Cos(x));
 }
 
-void add_pi(stack<identifier>& numbers_list, identifier& item1, bool flag1) {
+void add_pi(stack<identifier>& numbers_list, identifier& item1, bool &flag1) {
     item1.type = '0';
     item1.value = PI;
     numbers_list.push(item1);
-    flag1 = 0;
-};
+    flag1 = false;
+}
 
 void add_number(stack<identifier>& numbers_list, identifier& item1, bool& flag1) {
     double value;
@@ -49,7 +49,7 @@ void add_number(stack<identifier>& numbers_list, identifier& item1, bool& flag1)
     item1.type = '0';
     item1.value = value;
     numbers_list.push(item1);
-    flag1 = 0;
+    flag1 = false;
 }
 
 void sum(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
@@ -222,6 +222,7 @@ bool lnC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
 {
     if (num1 == 0)
     {
+        cerr << "Cannot take log of 0! " << std::endl;
         return true;
     }
     c = log(num1);
@@ -235,6 +236,7 @@ bool logC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
 {
     if (num1 == 0)
     {
+        cerr << "Cannot take log of 0! " << std::endl;
         return true;
     }
     c = log10(num1);
@@ -340,7 +342,7 @@ bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, i
 }
 bool mathsExceptions(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1) {
     if (!maths(numbers_list, operators_list, item1)) {
-        return 0;
+        return false;
     }
-    return 1;
+    return true;
 }

@@ -1,13 +1,13 @@
-﻿#include "functions.h"
+﻿#include "complex_functions.h"
 
 int main() {
-    stack <identifier> numbers;
-    stack <identifier> operators;
+    string str1;
+    stack<identifier> numbers;
+    stack<identifier> operators;
     identifier item;
     char element;
-    bool flag = 1;
-    while (1)
-    {
+    bool flag = true;
+    while (true) {
         element = cin.peek();
         if (element == '\n') {
             break;
@@ -16,22 +16,21 @@ int main() {
             cin.ignore();
             continue;
         }
-        if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' || element == 'n' || element == 'o' || element == 'g') {
+        if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' ||
+            element == 'n' || element == 'o' || element == 'g') {
             char func[3];
             for (int i = 0; i < 3; i++) {
                 func[i] = cin.peek();
-                if (isdigit(func[i])) {
+                if (isdigit(func[i]) || func[i] == '(') {
                     break;
                 }
                 cin.ignore();
             }
-            if (func[0] == 'l' && func[1] == 'n')
-            {
+            if (func[0] == 'l' && func[1] == 'n') {
                 add_ln(operators, item);
                 continue;
             }
-            if (func[0] == 'l' && func[1] == 'o' && func[2] == 'g')
-            {
+            if (func[0] == 'l' && func[1] == 'o' && func[2] == 'g') {
                 add_log(operators, item);
                 continue;
             }
@@ -73,29 +72,27 @@ int main() {
             add_number(numbers, item, flag);
             continue;
         }
-        if (element == '+' || element == '*' || element == '-' && flag == 0 || element == '/' || element == '^') {
-            if (operators.size() == 0) {
+        if (element == '+' || element == '*' || element == '-' && flag == 0 || element == '/' || element == '^' ||
+            element == '&' || element == '|') {
+            if (operators.empty()) {
                 add_el(operators, item, element);
                 continue;
             }
-            if (operators.size() != 0 && getRank(element) > getRank(operators.top().type))
-            {
+            if (!operators.empty() && getRank(element) > getRank(operators.top().type)) {
                 add_el(operators, item, element);
                 continue;
             }
-            if (operators.size() != 0 && getRank(element) <= getRank(operators.top().type))
-            {
+            if (!operators.empty() && getRank(element) <= getRank(operators.top().type)) {
                 mathsExceptions(numbers, operators, item);
                 continue;
             }
         }
         if (element == '(') {
-            flag = 1;
+            flag = true;
             add_el(operators, item, element);
             continue;
         }
-        if (element == ')')
-        {
+        if (element == ')') {
             while (operators.top().type != '(') {
                 mathsExceptions(numbers, operators, item);
                 continue;
@@ -103,17 +100,19 @@ int main() {
             operators.pop();
             cin.ignore();
             continue;
-        }
-        else
-        {
+        } else {
             cout << "Inappropriate expression\n";
             system("pause");
             return 0;
         }
     }
-    while (operators.size() != 0) {
-        mathsExceptions(numbers, operators, item);
-        continue;
+    while (!operators.empty()) {
+        if (!mathsExceptions(numbers, operators, item)) {
+            return 0;
+        }
+        else {
+            continue;
+        }
     }
     cout << "The answer is: " << numbers.top().value << endl;
     return 0;
