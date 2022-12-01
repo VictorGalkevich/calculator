@@ -1,4 +1,4 @@
-﻿#include "complex_functions.h"
+﻿#include "functions.h"
 
 int main() {
     string str1;
