@@ -17,9 +17,9 @@ int main() {
             continue;
         }
         if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' ||
-            element == 'n' || element == 'o' || element == 'g') {
-            char func[3];
-            for (int i = 0; i < 3; i++) {
+            element == 'n' || element == 'o' || element == 'g' || element == 'a') {
+            char func[4];
+            for (int i = 0; i < 4; i++) {
                 func[i] = cin.peek();
                 if (isdigit(func[i]) || func[i] == '(') {
                     break;
@@ -28,6 +28,14 @@ int main() {
             }
             if (func[0] == 'l' && func[1] == 'n') {
                 add_ln(operators, item);
+                continue;
+            }
+            if (func[0] == 'a' && func[1] == 's' && func[2] == 'i' && func[3] == 'n') {
+                add_asin(operators, item);
+                continue;
+            }
+            if (func[0] == 'a' && func[1] == 'c' && func[2] == 'o' && func[3] == 's') {
+                add_acos(operators, item);
                 continue;
             }
             if (func[0] == 'l' && func[1] == 'o' && func[2] == 'g') {
@@ -109,8 +117,7 @@ int main() {
     while (!operators.empty()) {
         if (!mathsExceptions(numbers, operators, item)) {
             return 0;
-        }
-        else {
+        } else {
             continue;
         }
     }
