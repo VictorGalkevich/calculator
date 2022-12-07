@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <string>
-
+#include <cmath>
 using namespace std;
 
 struct identifier {
@@ -104,3 +104,5 @@ void add_el(stack<identifier>& operators_list, identifier& item1, char element);
 void cosh(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 void add_cosh(stack<identifier>& operators_list, identifier& item1);
+
+void calculate();
