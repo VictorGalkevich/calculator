@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void calculate(){
+void calculate() {
     string str1;
     stack<identifier> numbers;
     stack<identifier> operators;
@@ -18,7 +18,7 @@ void calculate(){
             continue;
         }
         if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' ||
-            element == 'n' || element == 'o' || element == 'g' || element == 'a') {
+            element == 'n' || element == 'o' || element == 'g' || element == 'a' || element == 'u') {
             char func[4];
             for (int i = 0; i < 4; i++) {
                 func[i] = cin.peek();
@@ -48,31 +48,47 @@ void calculate(){
                 add_log(operators, item);
                 continue;
             }
-            if (func[0] == 's' && func[1] == 'i' && func[2] == 'n') {
+            if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] != 'h') {
                 add_sin(operators, item);
                 continue;
             }
-            if (func[0] == 'c' && func[1] == 'o' && func[2] == 's') {
+            if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] != 'h') {
                 add_cos(operators, item);
                 continue;
             }
-            if (func[0] == 't' && func[1] == 'a' && func[2] == 'n') {
+            if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] != 'h') {
                 add_tg(operators, item);
                 continue;
             }
-            if (func[0] == 'c' && func[1] == 't' && func[2] == 'g') {
+            if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] != 'h') {
                 add_ctg(operators, item);
+                continue;
+            }
+            if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] == 'h') {
+                add_tgh(operators, item);
+                continue;
+            }
+            if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] == 'h') {
+                add_ctgh(operators, item);
                 continue;
             }
             if (func[0] == 'e' && func[1] == 'x' && func[2] == 'p') {
                 add_exp(operators, item);
                 continue;
             }
-            if (func[0] == 'c' && func[1] == 'o' && func[2] == 'h') {
+            if (func[0] == 'u' && func[1] == 'p' && func[2] == 'b') {
+                add_upb(operators, item);
+                continue;
+            }
+            if (func[0] == 'l' && func[1] == 'w' && func[2] == 'b') {
+                add_lwb(operators, item);
+                continue;
+            }
+            if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] == 'h') {
                 add_cosh(operators, item);
                 continue;
             }
-            if (func[0] == 's' && func[1] == 'i' && func[2] == 'h') {
+            if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] == 'h') {
                 add_sinh(operators, item);
                 continue;
             }
@@ -132,6 +148,23 @@ void calculate(){
     cout << "The answer is: " << numbers.top().value << endl;
     return;
 }
+
+double Cosh(double x) {
+    return (Exp(x) + Exp(-x)) / 2;
+}
+
+double Sinh(double x) {
+    return (Exp(x) - Exp(-x)) / 2;
+}
+
+double Tanh(double x) {
+    return Sinh(x) / Cosh(x);
+}
+
+double Ctgh(double x) {
+    return Cosh(x) / Sinh(x);
+}
+
 double Sin(double x) {
     double temp;
     if (x == PI) {
@@ -167,6 +200,14 @@ double ctg(double x) {
 
 double tg(double x) {
     return (Sin(x) / Cos(x));
+}
+
+double upb(double x) {
+    return (int) x + 1;
+}
+
+double lwb(double x) {
+    return (int) x;
 }
 
 double fast_pow(double x, int n) {
@@ -335,6 +376,7 @@ void ASinC(double num1, stack<identifier>& numbers_list, identifier& item1, stac
 
 bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
     if (Cos(num1) == 0) {
+        cerr << "Tan doesn't exist when cos = 0" << std::endl;
         return true;
     }
     else {
@@ -349,6 +391,7 @@ bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
 
 bool ctgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
     if (Sin(num1) == 0) {
+        cerr << "Ctg doesn't exist when sin = 0" << std::endl;
         return true;
     }
     else {
@@ -361,8 +404,53 @@ bool ctgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     return false;
 }
 
+bool tghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+    if (Cosh(num1) == 0) {
+        cerr << "Tanh doesn't exist when cosh = 0" << std::endl;
+        return true;
+    }
+    else {
+        c = Tanh(num1);
+        item1.type = '0';
+        item1.value = c;
+        numbers_list.push(item1);
+        operators_list.pop();
+    }
+    return false;
+}
+
+bool ctghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+    if (Sinh(num1) == 0) {
+        cerr << "Ctgh doesn't exist when sinh = 0" << std::endl;
+        return true;
+    }
+    else {
+        c = Ctgh(num1);
+        item1.type = '0';
+        item1.value = c;
+        numbers_list.push(item1);
+        operators_list.pop();
+    }
+    return false;
+}
+
 void sinh(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
-    c = sinh(num1);
+    c = Sinh(num1);
+    item1.type = '0';
+    item1.value = c;
+    numbers_list.push(item1);
+    operators_list.pop();
+}
+void upb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+    c = upb(num1);
+    item1.type = '0';
+    item1.value = c;
+    numbers_list.push(item1);
+    operators_list.pop();
+}
+
+void lwb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+    c = lwb(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
@@ -370,7 +458,7 @@ void sinh(double num1, stack<identifier>& numbers_list, identifier& item1, stack
 }
 
 void cosh(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
-    c = cosh(num1);
+    c = Cosh(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
@@ -452,6 +540,12 @@ bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, i
     case 'e':
         exp(a, numbers_list, item1, operators_list, c);
         break;
+    case 'L':
+        lwb(a, numbers_list, item1, operators_list, c);
+        break;
+    case 'U':
+        upb(a, numbers_list, item1, operators_list, c);
+        break;
     case 's':
         SinC(a, numbers_list, item1, operators_list, c);
         break;
@@ -474,6 +568,22 @@ bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, i
         break;
     case 'g':
         bol = ctgC(a, numbers_list, item1, operators_list, c);
+        if (bol) {
+            return false;
+        }
+        else {
+            break;
+        }
+    case 'T':
+        bol = tghC(a, numbers_list, item1, operators_list, c);
+        if (bol) {
+            return false;
+        }
+        else {
+            break;
+        }
+    case 'G':
+        bol = ctghC(a, numbers_list, item1, operators_list, c);
         if (bol) {
             return false;
         }
