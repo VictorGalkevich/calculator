@@ -35,6 +35,18 @@ double lnX(double x);
 
 double lgX(double x);
 
+double upb(double x);
+
+double lwb(double x);
+
+double Cosh(double x);
+
+double Sinh(double x);
+
+double Tanh(double x);
+
+double Ctgh(double x);
+
 double logX(double x, int y);
 
 double fast_pow(double x, int n);
@@ -46,6 +58,10 @@ void CosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
 bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 bool ctgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+bool tghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+bool ctghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 bool lnC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
@@ -77,6 +93,10 @@ void add_tg(stack<identifier>& operators_list, identifier& item1);
 
 void add_ctg(stack<identifier>& operators_list, identifier& item1);
 
+void add_tgh(stack<identifier>& operators_list, identifier& item1);
+
+void add_ctgh(stack<identifier>& operators_list, identifier& item1);
+
 bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1, double logBasis);
 
 bool mathsExceptions(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1, double logBasis);
@@ -91,7 +111,15 @@ bool division(double num1, double num2, stack<identifier>& numbers_list, identif
 
 void exp(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
+void upb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+void lwb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
 void add_exp(stack<identifier>& operators_list, identifier& item1);
+
+void add_upb(stack<identifier>& operators_list, identifier& item1);
+
+void add_lwb(stack<identifier>& operators_list, identifier& item1);
 
 void power(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
