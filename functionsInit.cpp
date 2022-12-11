@@ -2,7 +2,8 @@
 
 int getRank(char element) {
     if (element == 's' || element == 'c' || element == 't' || element == 'g' || element == 'h' || element == 'y' ||
-        element == 'e' || element == 'm' || element == 'l' || element == 'f' || element == 'C' || element == 'S') {
+        element == 'e' || element == 'm' || element == 'l' || element == 'f' || element == 'C' || element == 'S' ||
+        element == 'T' || element == 'G' || element == 'L' || element == 'U') {
         return 4;
     }
     if (element == '+' || element == '-') {
@@ -37,6 +38,18 @@ void add_number(stack<identifier>& numbers_list, identifier& item1, bool& flag1)
 
 void add_exp(stack<identifier>& operators_list, identifier& item1) {
     item1.type = 'e';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_lwb(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'L';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_upb(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'U';
     item1.value = 0;
     operators_list.push(item1);
 }
@@ -114,3 +127,14 @@ void add_acos(stack<identifier>& operators_list, identifier& item1) {
     operators_list.push(item1);
 }
 
+void add_tgh(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'T';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_ctgh(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'G';
+    item1.value = 0;
+    operators_list.push(item1);
+}
