@@ -3,19 +3,19 @@
 int getRank(char element) {
     if (element == 's' || element == 'c' || element == 't' || element == 'g' || element == 'h' || element == 'y' ||
         element == 'e' || element == 'm' || element == 'l' || element == 'f' || element == 'C' || element == 'S' ||
-        element == 'T' || element == 'G' || element == 'L' || element == 'U') {
+        element == 'T' || element == 'G' || element == 'L' || element == 'U' || element == 'a') {
         return 5;
     }
     if (element == '+' || element == '-') {
         return 1;
     }
-    if (element == '*' || element == '/') {
+    if (element == '*' || element == '/' || element ==  '%') {
         return 2;
     }
     if (element == '^') {
         return 3;
     }
-    if(element == '!'){
+    if (element == '!') {
         return 4;
     }
     else {
@@ -138,6 +138,30 @@ void add_tgh(stack<identifier>& operators_list, identifier& item1) {
 
 void add_ctgh(stack<identifier>& operators_list, identifier& item1) {
     item1.type = 'G';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_oct(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'O';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_hex(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'H';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_bin(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'B';
+    item1.value = 0;
+    operators_list.push(item1);
+}
+
+void add_abs(stack<identifier>& operators_list, identifier& item1) {
+    item1.type = 'A';
     item1.value = 0;
     operators_list.push(item1);
 }

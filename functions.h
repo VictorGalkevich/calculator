@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stack>
 #include <string>
-#include <cmath>
-#include <algorithm>
 using namespace std;
 
 struct identifier {
@@ -23,7 +21,15 @@ double Sin(double x);
 
 double Cos(double x);
 
+double Abs(double x);
+
 double tg(double x);
+
+string hex(double x);
+
+string bin(double x);
+
+string oct(double x);
 
 double ctg(double x);
 
@@ -55,6 +61,14 @@ double fast_pow(double x, int n);
 
 void SinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
+void absC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+bool hexC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
+
+bool octC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
+
+bool binC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
+
 void CosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
@@ -78,6 +92,14 @@ void add_pi(stack<identifier>& numbers_list, identifier& item1, bool& flag1);
 void add_number(stack<identifier>& numbers_list, identifier& item1, bool& flag1);
 
 void add_ln(stack<identifier>& operators_list, identifier& item1);
+
+void add_abs(stack<identifier>& operators_list, identifier& item1);
+
+void add_hex(stack<identifier>& operators_list, identifier& item1);
+
+void add_bin(stack<identifier>& operators_list, identifier& item1);
+
+void add_oct(stack<identifier>& operators_list, identifier& item1);
 
 void add_lg(stack<identifier>& operators_list, identifier& item1);
 
@@ -106,9 +128,12 @@ bool mathsExceptions(stack<identifier>& numbers_list, stack<identifier>& operato
 void factorial(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 int factorial_calculate(int num);
+
 double powC(double a, double b);
 
 void sum(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+void mod(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 void difference(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
@@ -144,10 +169,9 @@ void calculate();
 
 
 
-struct programming_identifier{
+struct programming_identifier {
     int val;
     char ch;
-    programming_identifier():val(0), ch(' '){};
+    programming_identifier() :val(0), ch(' ') {};
 };
 int programming_getRank(char element);
-
