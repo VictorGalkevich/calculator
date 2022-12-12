@@ -4,7 +4,7 @@ int getRank(char element) {
     if (element == 's' || element == 'c' || element == 't' || element == 'g' || element == 'h' || element == 'y' ||
         element == 'e' || element == 'm' || element == 'l' || element == 'f' || element == 'C' || element == 'S' ||
         element == 'T' || element == 'G' || element == 'L' || element == 'U') {
-        return 4;
+        return 5;
     }
     if (element == '+' || element == '-') {
         return 1;
@@ -14,6 +14,9 @@ int getRank(char element) {
     }
     if (element == '^') {
         return 3;
+    }
+    if(element == '!'){
+        return 4;
     }
     else {
         return 0;

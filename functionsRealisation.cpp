@@ -2,151 +2,162 @@
 
 void calculate() {
     string str1;
-    stack<identifier> numbers;
-    stack<identifier> operators;
-    identifier item;
-    char element;
-    bool flag = true;
-    int logBasis = 0;
-    while (true) {
-        element = cin.peek();
-        if (element == '\n') {
-            break;
-        }
-        if (element == ' ') {
-            cin.ignore();
-            continue;
-        }
-        if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' ||
-            element == 'n' || element == 'o' || element == 'g' || element == 'a' || element == 'u') {
-            char func[4];
-            for (int i = 0; i < 4; i++) {
-                func[i] = cin.peek();
-                if (isdigit(func[i]) || func[i] == '(') {
-                    break;
-                }
+    getline(cin, str1);
+    /*for (auto c: str1) {
+        c = tolower(c);
+    }*/
+    if (str1 == "engineer") {
+        stack<identifier> numbers;
+        stack<identifier> operators;
+        identifier item;
+        char element;
+        bool flag = true;
+        int logBasis = 0;
+        while (true) {
+            element = cin.peek();
+            if (element == '\n') {
+                break;
+            }
+            if (element == ' ') {
                 cin.ignore();
-            }
-            if (func[0] == 'l' && func[1] == 'n') {
-                add_ln(operators, item);
                 continue;
             }
-            if (func[0] == 'a' && func[1] == 's' && func[2] == 'i' && func[3] == 'n') {
-                add_asin(operators, item);
+            if (element == 's' || element == 'c' || element == 't' || element == 'e' || element == 'l' ||
+                element == 'n' || element == 'o' || element == 'g' || element == 'a' || element == 'u') {
+                char func[4];
+                for (int i = 0; i < 4; i++) {
+                    func[i] = cin.peek();
+                    if (isdigit(func[i]) || func[i] == '(') {
+                        break;
+                    }
+                    cin.ignore();
+                }
+                if (func[0] == 'l' && func[1] == 'n') {
+                    add_ln(operators, item);
+                    continue;
+                }
+                if (func[0] == 'a' && func[1] == 's' && func[2] == 'i' && func[3] == 'n') {
+                    add_asin(operators, item);
+                    continue;
+                }
+                if (func[0] == 'a' && func[1] == 'c' && func[2] == 'o' && func[3] == 's') {
+                    add_acos(operators, item);
+                    continue;
+                }
+                if (func[0] == 'l' && func[1] == 'g') {
+                    add_lg(operators, item);
+                    continue;
+                }
+                if (func[0] == 'l' && func[1] == 'o' && func[2] == 'g' && func[3] >= '0' && func[3] <= '9') {
+                    logBasis = func[3] - '0';
+                    add_log(operators, item);
+                    continue;
+                }
+                if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] != 'h') {
+                    add_sin(operators, item);
+                    continue;
+                }
+                if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] != 'h') {
+                    add_cos(operators, item);
+                    continue;
+                }
+                if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] != 'h') {
+                    add_tg(operators, item);
+                    continue;
+                }
+                if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] != 'h') {
+                    add_ctg(operators, item);
+                    continue;
+                }
+                if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] == 'h') {
+                    add_tgh(operators, item);
+                    continue;
+                }
+                if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] == 'h') {
+                    add_ctgh(operators, item);
+                    continue;
+                }
+                if (func[0] == 'e' && func[1] == 'x' && func[2] == 'p') {
+                    add_exp(operators, item);
+                    continue;
+                }
+                if (func[0] == 'u' && func[1] == 'p' && func[2] == 'b') {
+                    add_upb(operators, item);
+                    continue;
+                }
+                if (func[0] == 'l' && func[1] == 'w' && func[2] == 'b') {
+                    add_lwb(operators, item);
+                    continue;
+                }
+                if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] == 'h') {
+                    add_cosh(operators, item);
+                    continue;
+                }
+                if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] == 'h') {
+                    add_sinh(operators, item);
+                    continue;
+                }
+            }
+            if (element == 'p') {
+                add_pi(numbers, item, flag);
+                cin.ignore();
                 continue;
             }
-            if (func[0] == 'a' && func[1] == 'c' && func[2] == 'o' && func[3] == 's') {
-                add_acos(operators, item);
+            if (element >= '0' && element <= '9' || element == '-' && flag == 1) {
+                add_number(numbers, item, flag);
                 continue;
             }
-            if (func[0] == 'l' && func[1] == 'g') {
-                add_lg(operators, item);
-                continue;
+            if (element == '+' || element == '*' || element == '-' && flag == 0 || element == '/' || element == '^' ||
+                element == '&' || element == '|' || element == '!') {
+                if (operators.empty()) {
+                    add_el(operators, item, element);
+                    continue;
+                }
+                if (!operators.empty() && getRank(element) > getRank(operators.top().type)) {
+                    add_el(operators, item, element);
+                    continue;
+                }
+                if (!operators.empty() && getRank(element) <= getRank(operators.top().type)) {
+                    mathsExceptions(numbers, operators, item, logBasis);
+                    continue;
+                }
             }
-            if (func[0] == 'l' && func[1] == 'o' && func[2] == 'g' && func[3] >= '0' && func[3] <= '9') {
-                logBasis = func[3] - '0';
-                add_log(operators, item);
-                continue;
-            }
-            if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] != 'h') {
-                add_sin(operators, item);
-                continue;
-            }
-            if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] != 'h') {
-                add_cos(operators, item);
-                continue;
-            }
-            if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] != 'h') {
-                add_tg(operators, item);
-                continue;
-            }
-            if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] != 'h') {
-                add_ctg(operators, item);
-                continue;
-            }
-            if (func[0] == 't' && func[1] == 'a' && func[2] == 'n' && func[3] == 'h') {
-                add_tgh(operators, item);
-                continue;
-            }
-            if (func[0] == 'c' && func[1] == 't' && func[2] == 'g' && func[3] == 'h') {
-                add_ctgh(operators, item);
-                continue;
-            }
-            if (func[0] == 'e' && func[1] == 'x' && func[2] == 'p') {
-                add_exp(operators, item);
-                continue;
-            }
-            if (func[0] == 'u' && func[1] == 'p' && func[2] == 'b') {
-                add_upb(operators, item);
-                continue;
-            }
-            if (func[0] == 'l' && func[1] == 'w' && func[2] == 'b') {
-                add_lwb(operators, item);
-                continue;
-            }
-            if (func[0] == 'c' && func[1] == 'o' && func[2] == 's' && func[3] == 'h') {
-                add_cosh(operators, item);
-                continue;
-            }
-            if (func[0] == 's' && func[1] == 'i' && func[2] == 'n' && func[3] == 'h') {
-                add_sinh(operators, item);
-                continue;
-            }
-        }
-        if (element == 'p') {
-            add_pi(numbers, item, flag);
-            cin.ignore();
-            continue;
-        }
-        if (element >= '0' && element <= '9' || element == '-' && flag == 1) {
-            add_number(numbers, item, flag);
-            continue;
-        }
-        if (element == '+' || element == '*' || element == '-' && flag == 0 || element == '/' || element == '^' ||
-            element == '&' || element == '|') {
-            if (operators.empty()) {
+            if (element == '(') {
+                flag = true;
                 add_el(operators, item, element);
                 continue;
             }
-            if (!operators.empty() && getRank(element) > getRank(operators.top().type)) {
-                add_el(operators, item, element);
+            if (element == ')') {
+                while (operators.top().type != '(') {
+                    mathsExceptions(numbers, operators, item, logBasis);
+                    continue;
+                }
+                operators.pop();
+                cin.ignore();
+                continue;
+            } else {
+                cout << "Inappropriate expression\n";
+                system("pause");
+                return;
+            }
+        }
+        while (!operators.empty()) {
+            if (!mathsExceptions(numbers, operators, item, logBasis)) {
+                return;
+            } else {
                 continue;
             }
-            if (!operators.empty() && getRank(element) <= getRank(operators.top().type)) {
-                mathsExceptions(numbers, operators, item, logBasis);
-                continue;
-            }
         }
-        if (element == '(') {
-            flag = true;
-            add_el(operators, item, element);
-            continue;
-        }
-        if (element == ')') {
-            while (operators.top().type != '(') {
-                mathsExceptions(numbers, operators, item, logBasis);
-                continue;
-            }
-            operators.pop();
-            cin.ignore();
-            continue;
-        }
-        else {
-            cout << "Inappropriate expression\n";
-            system("pause");
-            return;
-        }
+        cout << "The answer is: " << numbers.top().value << endl;
+        return;
     }
-    while (!operators.empty()) {
-        if (!mathsExceptions(numbers, operators, item, logBasis)) {
-            return;
-        }
-        else {
-            continue;
-        }
+    else if(str1 == "binary"){
+
     }
-    cout << "The answer is: " << numbers.top().value << endl;
-    return;
+    else{
+        std::cout << "Wrong expression! ";
+        calculate();
+    }
 }
 
 double Cosh(double x) {
@@ -177,8 +188,9 @@ double Sin(double x) {
         temp = x / (2 * PI);
         x = x - (temp * 2 * PI);
     }
-    return (x - fast_pow(x, 3) / 6 + fast_pow(x, 5) / 120 - fast_pow(x, 7) / 5040 + fast_pow(x, 9) / 362880 - fast_pow(x, 11) / 39916800 +
-        fast_pow(x, 13) / 6227020800);
+    return (x - fast_pow(x, 3) / 6 + fast_pow(x, 5) / 120 - fast_pow(x, 7) / 5040 + fast_pow(x, 9) / 362880 -
+            fast_pow(x, 11) / 39916800 +
+            fast_pow(x, 13) / 6227020800);
 }
 
 double Cos(double x) {
@@ -190,8 +202,9 @@ double Cos(double x) {
         temp = x / (2 * PI);
         x = x - (temp * 2 * PI);
     }
-    return (1 - fast_pow(x, 2) / 2 + fast_pow(x, 4) / 24 - fast_pow(x, 6) / 720 + fast_pow(x, 8) / 40320 - fast_pow(x, 10) / 3628800 +
-        fast_pow(x, 12) / 479001600 - fast_pow(x, 14) / 87178291200);
+    return (1 - fast_pow(x, 2) / 2 + fast_pow(x, 4) / 24 - fast_pow(x, 6) / 720 + fast_pow(x, 8) / 40320 -
+            fast_pow(x, 10) / 3628800 +
+            fast_pow(x, 12) / 479001600 - fast_pow(x, 14) / 87178291200);
 }
 
 double ctg(double x) {
@@ -213,14 +226,11 @@ double lwb(double x) {
 double fast_pow(double x, int n) {
     if (n < 0) {
         return fast_pow(1 / x, -n);
-    }
-    else if (n == 0) {
+    } else if (n == 0) {
         return 1;
-    }
-    else if (n % 2 == 0) {
+    } else if (n % 2 == 0) {
         return fast_pow(x * x, n / 2);
-    }
-    else {
+    } else {
         return x * fast_pow(x * x, (n - 1) / 2);
     }
 }
@@ -232,9 +242,11 @@ double Asin(double x) {
     if (x == 1) {
         return PI / 2;
     }
-    return (x + fast_pow(x, 3) / 6 + fast_pow(x, 5) * 3 / 40 + 5 * fast_pow(x, 7) / 112 + 35 * fast_pow(x, 9) / 1152 + 63 *
-        fast_pow(x, 11) / 2816);
+    return (x + fast_pow(x, 3) / 6 + fast_pow(x, 5) * 3 / 40 + 5 * fast_pow(x, 7) / 112 + 35 * fast_pow(x, 9) / 1152 +
+            63 *
+            fast_pow(x, 11) / 2816);
 }
+
 double Acos(double x) {
     if (x == -1) {
         return PI;
@@ -244,16 +256,17 @@ double Acos(double x) {
     }
     return PI / 2 - Asin(x);
 }
+
 double Exp(double x) {
-    return(1 + x + fast_pow(x, 2) / 2 + fast_pow(x, 3) / 6 + fast_pow(x, 4) / 24 + fast_pow(x, 5) / 120 + fast_pow(x, 6) / 720 +
-        fast_pow(x, 7) / 5040 + fast_pow(x, 8) / 40320 + fast_pow(x, 9) / 362880 + fast_pow(x, 10) / 3628800);
+    return (1 + x + fast_pow(x, 2) / 2 + fast_pow(x, 3) / 6 + fast_pow(x, 4) / 24 + fast_pow(x, 5) / 120 +
+            fast_pow(x, 6) / 720 +
+            fast_pow(x, 7) / 5040 + fast_pow(x, 8) / 40320 + fast_pow(x, 9) / 362880 + fast_pow(x, 10) / 3628800);
 }
 
 double lnX(double x) {
     const double eps = 1.0e-5;
     int A = 0;
-    while (x >= 2.0)
-    {
+    while (x >= 2.0) {
         A++;
         x /= E;
     }
@@ -261,8 +274,7 @@ double lnX(double x) {
     double u = t;
     double lnabsx = u;
     int n = 1;
-    do
-    {
+    do {
         n++;
         u *= -((n - 1) * t) / n;
         lnabsx += u;
@@ -278,14 +290,14 @@ double logX(double x, int y) {
     return lnX(x) / lnX(y);
 }
 
-bool division(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool division(double num1, double num2, stack<identifier> &numbers_list, identifier &item1,
+              stack<identifier> &operators_list, double c) {
     num2 = numbers_list.top().value;
     if (num1 == 0) {
         cerr << "It's forbidden to divide by 0\n";
         exit(0);
         return true;
-    }
-    else {
+    } else {
         numbers_list.pop();
         c = (num2 / num1);
         item1.type = '0';
@@ -296,14 +308,36 @@ bool division(double num1, double num2, stack<identifier>& numbers_list, identif
     return false;
 }
 
-void exp(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void exp(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Exp(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
     operators_list.pop();
 }
-void sum(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+int factorial_calculate(int num){
+    if(num > 1){
+        return num * factorial_calculate(num-1);
+    }
+    else{
+        return 1;
+    }
+}
+void factorial(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c){
+    int temp = num1;
+    if(num1 - temp != 0 || temp <0){
+        cerr << "Cannot take factorial of non int number! ";
+        exit(0);
+    }
+    c = factorial_calculate(temp);
+    item1.type = '0';
+    item1.value = c;
+    numbers_list.push(item1);
+    operators_list.pop();
+}
+void
+sum(double num1, double num2, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list,
+    double c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num1 + num2;
@@ -313,7 +347,8 @@ void sum(double num1, double num2, stack<identifier>& numbers_list, identifier& 
     operators_list.pop();
 }
 
-void difference(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void difference(double num1, double num2, stack<identifier> &numbers_list, identifier &item1,
+                stack<identifier> &operators_list, double c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 - num1;
@@ -323,7 +358,8 @@ void difference(double num1, double num2, stack<identifier>& numbers_list, ident
     operators_list.pop();
 }
 
-void production(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void production(double num1, double num2, stack<identifier> &numbers_list, identifier &item1,
+                stack<identifier> &operators_list, double c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num1 * num2;
@@ -333,18 +369,38 @@ void production(double num1, double num2, stack<identifier>& numbers_list, ident
     operators_list.pop();
 }
 
-void power(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list,
-    double c) {
+void
+power(double num1, double num2, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list,
+      double c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
-    c = pow(num2, num1);
+    c = powC(num2, num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
     operators_list.pop();
 }
+double powC(double a, double b){
+    static int count = 1;
+    static double res = 1;
+    static double tmp = 1;
+    if(count== 100){
+        int temp = res;
+        if(temp - res <=0.002){
+            return temp;
+        }
+        return res;
+    }
+    else{
+        tmp = tmp * b* lnX(a)/ count;
+        res += tmp;
+        count++;
+        powC(a,b);
+    }
+}
 
-void SinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void
+SinC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Sin(num1);
     item1.type = '0';
     item1.value = c;
@@ -352,21 +408,26 @@ void SinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     operators_list.pop();
 }
 
-void CosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void
+CosC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Cos(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
     operators_list.pop();
 }
-void ACosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+
+void
+ACosC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Acos(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
     operators_list.pop();
 }
-void ASinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+
+void
+ASinC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Asin(num1);
     item1.type = '0';
     item1.value = c;
@@ -374,12 +435,11 @@ void ASinC(double num1, stack<identifier>& numbers_list, identifier& item1, stac
     operators_list.pop();
 }
 
-bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool tgC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (Cos(num1) == 0) {
         cerr << "Tan doesn't exist when cos = 0" << std::endl;
         return true;
-    }
-    else {
+    } else {
         c = tg(num1);
         item1.type = '0';
         item1.value = c;
@@ -389,12 +449,12 @@ bool tgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
     return false;
 }
 
-bool ctgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool
+ctgC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (Sin(num1) == 0) {
         cerr << "Ctg doesn't exist when sin = 0" << std::endl;
         return true;
-    }
-    else {
+    } else {
         c = ctg(num1);
         item1.type = '0';
         item1.value = c;
@@ -404,12 +464,12 @@ bool ctgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     return false;
 }
 
-bool tghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool
+tghC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (Cosh(num1) == 0) {
         cerr << "Tanh doesn't exist when cosh = 0" << std::endl;
         return true;
-    }
-    else {
+    } else {
         c = Tanh(num1);
         item1.type = '0';
         item1.value = c;
@@ -419,12 +479,12 @@ bool tghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     return false;
 }
 
-bool ctghC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool
+ctghC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (Sinh(num1) == 0) {
         cerr << "Ctgh doesn't exist when sinh = 0" << std::endl;
         return true;
-    }
-    else {
+    } else {
         c = Ctgh(num1);
         item1.type = '0';
         item1.value = c;
@@ -434,14 +494,16 @@ bool ctghC(double num1, stack<identifier>& numbers_list, identifier& item1, stac
     return false;
 }
 
-void sinh(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void
+sinh(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Sinh(num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
     operators_list.pop();
 }
-void upb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+
+void upb(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = upb(num1);
     item1.type = '0';
     item1.value = c;
@@ -449,7 +511,7 @@ void upb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
     operators_list.pop();
 }
 
-void lwb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void lwb(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = lwb(num1);
     item1.type = '0';
     item1.value = c;
@@ -457,7 +519,8 @@ void lwb(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
     operators_list.pop();
 }
 
-void cosh(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+void
+cosh(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     c = Cosh(num1);
     item1.type = '0';
     item1.value = c;
@@ -465,7 +528,7 @@ void cosh(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     operators_list.pop();
 }
 
-bool lnC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool lnC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (num1 == 0) {
         cerr << "Cannot take log of 0! " << std::endl;
         return true;
@@ -482,7 +545,7 @@ bool lnC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
     return false;
 }
 
-bool lgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c) {
+bool lgC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c) {
     if (num1 == 0) {
         cerr << "Cannot take log of 0! " << std::endl;
         return true;
@@ -499,7 +562,8 @@ bool lgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
     return false;
 }
 
-bool logC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c, double logBasis) {
+bool logC(double num1, stack<identifier> &numbers_list, identifier &item1, stack<identifier> &operators_list, double c,
+          double logBasis) {
     if (num1 == 0) {
         cerr << "Cannot take log of 0! " << std::endl;
         return true;
@@ -520,7 +584,7 @@ bool logC(double num1, stack<identifier>& numbers_list, identifier& item1, stack
     return false;
 }
 
-bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1, double logBasis) {
+bool maths(stack<identifier> &numbers_list, stack<identifier> &operators_list, identifier &item1, double logBasis) {
     double a, b, c;
     b = 0;
     c = 0;
@@ -528,122 +592,118 @@ bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, i
     numbers_list.pop();
     bool bol;
     switch (operators_list.top().type) {
-    case '+':
-        sum(a, b, numbers_list, item1, operators_list, c);
-        break;
-    case '-':
-        difference(a, b, numbers_list, item1, operators_list, c);
-        break;
-    case '*':
-        production(a, b, numbers_list, item1, operators_list, c);
-        break;
-    case 'e':
-        exp(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'L':
-        lwb(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'U':
-        upb(a, numbers_list, item1, operators_list, c);
-        break;
-    case 's':
-        SinC(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'c':
-        CosC(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'S':
-        if (a > 1 || a < -1) {
-            cerr << "Cannot take asin of " << a << "!" << std::endl;
-            return false;
-        }
-        ASinC(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'C':
-        if (a > 1 || a < -1) {
-            cerr << "Cannot take acos of " << a << "!" << std::endl;
-            return false;
-        }
-        ACosC(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'g':
-        bol = ctgC(a, numbers_list, item1, operators_list, c);
-        if (bol) {
-            return false;
-        }
-        else {
+        case '+':
+            sum(a, b, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 'T':
-        bol = tghC(a, numbers_list, item1, operators_list, c);
-        if (bol) {
-            return false;
-        }
-        else {
+        case '!':
+            factorial(a,numbers_list, item1, operators_list,c);
             break;
-        }
-    case 'G':
-        bol = ctghC(a, numbers_list, item1, operators_list, c);
-        if (bol) {
-            return false;
-        }
-        else {
+        case '-':
+            difference(a, b, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 't':
-        bol = tgC(a, numbers_list, item1, operators_list, c);
-        if (bol) {
-            return false;
-        }
-        else {
+        case '*':
+            production(a, b, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 'h':
-        cosh(a, numbers_list, item1, operators_list, c);
-        break;
-    case 'y':
-        sinh(a, numbers_list, item1, operators_list, c);
-        break;
-    case '^':
-        power(a, b, numbers_list, item1, operators_list, c);
-        break;
-    case '/':
-        bol = division(a, b, numbers_list, item1, operators_list, c);
-        if (bol) {
-            return false;
-        }
-        else {
+        case 'e':
+            exp(a, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 'l':
-        if (lnC(a, numbers_list, item1, operators_list, c)) {
-            return false;
-        }
-        else {
+        case 'L':
+            lwb(a, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 'm':
-        if (lgC(a, numbers_list, item1, operators_list, c)) {
-            return false;
-        }
-        else {
+        case 'U':
+            upb(a, numbers_list, item1, operators_list, c);
             break;
-        }
-    case 'f':
-        if (logC(a, numbers_list, item1, operators_list, c, logBasis)) {
-            return false;
-        }
-        else {
+        case 's':
+            SinC(a, numbers_list, item1, operators_list, c);
             break;
-        }
-    default:
-        cerr << "Error, sth went wrong\n";
-        return false;
+        case 'c':
+            CosC(a, numbers_list, item1, operators_list, c);
+            break;
+        case 'S':
+            if (a > 1 || a < -1) {
+                cerr << "Cannot take asin of " << a << "!" << std::endl;
+                return false;
+            }
+            ASinC(a, numbers_list, item1, operators_list, c);
+            break;
+        case 'C':
+            if (a > 1 || a < -1) {
+                cerr << "Cannot take acos of " << a << "!" << std::endl;
+                return false;
+            }
+            ACosC(a, numbers_list, item1, operators_list, c);
+            break;
+        case 'g':
+            bol = ctgC(a, numbers_list, item1, operators_list, c);
+            if (bol) {
+                return false;
+            } else {
+                break;
+            }
+        case 'T':
+            bol = tghC(a, numbers_list, item1, operators_list, c);
+            if (bol) {
+                return false;
+            } else {
+                break;
+            }
+        case 'G':
+            bol = ctghC(a, numbers_list, item1, operators_list, c);
+            if (bol) {
+                return false;
+            } else {
+                break;
+            }
+        case 't':
+            bol = tgC(a, numbers_list, item1, operators_list, c);
+            if (bol) {
+                return false;
+            } else {
+                break;
+            }
+        case 'h':
+            cosh(a, numbers_list, item1, operators_list, c);
+            break;
+        case 'y':
+            sinh(a, numbers_list, item1, operators_list, c);
+            break;
+        case '^':
+            power(a, b, numbers_list, item1, operators_list, c);
+            break;
+        case '/':
+            bol = division(a, b, numbers_list, item1, operators_list, c);
+            if (bol) {
+                return false;
+            } else {
+                break;
+            }
+        case 'l':
+            if (lnC(a, numbers_list, item1, operators_list, c)) {
+                return false;
+            } else {
+                break;
+            }
+        case 'm':
+            if (lgC(a, numbers_list, item1, operators_list, c)) {
+                return false;
+            } else {
+                break;
+            }
+        case 'f':
+            if (logC(a, numbers_list, item1, operators_list, c, logBasis)) {
+                return false;
+            } else {
+                break;
+            }
+        default:
+            cerr << "Error, sth went wrong\n";
+            return false;
     }
     return true;
 }
 
-bool mathsExceptions(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1, double logBasis) {
+bool mathsExceptions(stack<identifier> &numbers_list, stack<identifier> &operators_list, identifier &item1,
+                     double logBasis) {
     if (!maths(numbers_list, operators_list, item1, logBasis)) {
         return false;
     }

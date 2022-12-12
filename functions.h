@@ -2,6 +2,7 @@
 #include <stack>
 #include <string>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 struct identifier {
@@ -10,6 +11,7 @@ struct identifier {
 
     identifier() : type(' '), value(0) {};
 };
+
 
 int getRank(char element);
 
@@ -101,6 +103,11 @@ bool maths(stack<identifier>& numbers_list, stack<identifier>& operators_list, i
 
 bool mathsExceptions(stack<identifier>& numbers_list, stack<identifier>& operators_list, identifier& item1, double logBasis);
 
+void factorial(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+int factorial_calculate(int num);
+double powC(double a, double b);
+
 void sum(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 void difference(double num1, double num2, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
@@ -134,3 +141,13 @@ void cosh(double num1, stack<identifier>& numbers_list, identifier& item1, stack
 void add_cosh(stack<identifier>& operators_list, identifier& item1);
 
 void calculate();
+
+
+
+struct programming_identifier{
+    int val;
+    char ch;
+    programming_identifier():val(0), ch(' '){};
+};
+int programming_getRank(char element);
+
