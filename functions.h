@@ -25,12 +25,6 @@ double Abs(double x);
 
 double tg(double x);
 
-string hex(double x);
-
-string bin(double x);
-
-string oct(double x);
-
 double ctg(double x);
 
 double Asin(double x);
