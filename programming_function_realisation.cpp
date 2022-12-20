@@ -1,4 +1,5 @@
 #include "programming_operations.h"
+#include "functions.h"
 
 int P_get_prior(char element) {
     if (element == '~') {
@@ -12,28 +13,30 @@ int P_get_prior(char element) {
     }
     if (element == '^' || element == '<' || element == '>' || element == '|') {
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
 }
 
-string hex(int x) {
-    string ans = "";
-    int n = x;
+string hex(double x) {
+    string ans = ""; //stroke by default
+    int n = x; //as we work only with ints we cast double to int
     while (n != 0) {
         int rem = 0;
         char ch;
         rem = n % 16;
         if (rem < 10) {
-            ch = rem + 48;
-        } else {
-            ch = rem + 55;
+            ch = rem + 48; //if remnanat <9 ew return the value(number)
+        }
+        else {
+            ch = rem + 55; //if remnant >9 we return a letter(A,B,C,...)
         }
         ans += ch;
         n = n / 16;
     }
     int i = 0, j = ans.size() - 1;
-    while (i <= j) {
+    while (i <= j) { // as our stroke was mirrored we reverse all the elements
         swap(ans[i], ans[j]);
         i++;
         j--;
@@ -41,11 +44,11 @@ string hex(int x) {
     return ans;
 }
 
-string bin(int x) {
+string bin(double x) {
     string ans;
-    int n = x;
+    int n = x;  //as we work only with ints we cast double to int
     while (n != 0) {
-        ans = (n % 2 == 0 ? "0" : "1") + ans;
+        ans = (n % 2 == 0 ? "0" : "1") + ans; //divide by 2 all the time and print every symbol, thats easy
         n /= 2;
     }
     return ans;
@@ -53,25 +56,25 @@ string bin(int x) {
 
 string oct(double x) {
     int octalNum = 0, placeValue = 1;
-    int n = (int) x;
+    int n = x; //as we work only with ints we cast double to int
     while (n != 0) {
-        octalNum += (n % 8) * placeValue;
+        octalNum += (n % 8) * placeValue; //here i tried to find the remnant and thenadd it to octalnum
         n /= 8;
         placeValue *= 10;
     }
     return to_string(octalNum);
 }
 
-void P_add_number(stack<int_identifier> &numbers_list, int_identifier &item1, bool &flag1) {
+void P_add_number(stack<int_identifier>& numbers_list, int_identifier& item1, bool& flag1) { //here we add the number to the stack
     int value;
     cin >> value;
-    item1.ch = '0';
+    item1.ch = '0'; //number isnt an operation so its charValue = '0', but numberValue = number
     item1.value = value;
     numbers_list.push(item1);
     flag1 = false;
 }
 
-void P_add_el(stack<int_identifier> &operators_list, int_identifier &item1, char element) {
+void P_add_el(stack<int_identifier>& operators_list, int_identifier& item1, char element) { //here we add an element to the stack
     if (element == '<') {
         char ch = cin.peek();
         if (ch != '<') {
@@ -88,21 +91,21 @@ void P_add_el(stack<int_identifier> &operators_list, int_identifier &item1, char
         }
         cin.ignore();
     }
-    item1.ch = element;
-    item1.value = 0;
+    item1.ch = element; //
+    item1.value = 0; //as element has no numberValue we write 0
     operators_list.push(item1);
     cin.ignore();
 }
 
-void add_not(stack<int_identifier> &operators_list, int_identifier &item1) {
+void add_not(stack<int_identifier>& operators_list, int_identifier& item1) { //other operations shown below follow the same logic as it was in the previous example
     item1.ch = '~';
     item1.value = 0;
     operators_list.push(item1);
     cin.ignore();
 }
 
-void P_sum(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-           stack<int_identifier> &operators_list, int c) {
+void P_sum(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 + num1;
@@ -112,8 +115,8 @@ void P_sum(int num1, int num2, stack<int_identifier> &numbers_list, int_identifi
     operators_list.pop();
 }
 
-void P_difference(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-                  stack<int_identifier> &operators_list, int c) {
+void P_difference(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 - num1;
@@ -123,8 +126,8 @@ void P_difference(int num1, int num2, stack<int_identifier> &numbers_list, int_i
     operators_list.pop();
 }
 
-void P_prod(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-            stack<int_identifier> &operators_list, int c) {
+void P_prod(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 * num1;
@@ -134,8 +137,8 @@ void P_prod(int num1, int num2, stack<int_identifier> &numbers_list, int_identif
     operators_list.pop();
 }
 
-void P_xor(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-           stack<int_identifier> &operators_list, int c) {
+void P_xor(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 ^ num1;
@@ -145,8 +148,8 @@ void P_xor(int num1, int num2, stack<int_identifier> &numbers_list, int_identifi
     operators_list.pop();
 }
 
-void P_and(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-           stack<int_identifier> &operators_list, int c) {
+void P_and(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 & num1;
@@ -156,8 +159,8 @@ void P_and(int num1, int num2, stack<int_identifier> &numbers_list, int_identifi
     operators_list.pop();
 }
 
-void P_or(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-          stack<int_identifier> &operators_list, int c) {
+void P_or(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 | num1;
@@ -167,8 +170,8 @@ void P_or(int num1, int num2, stack<int_identifier> &numbers_list, int_identifie
     operators_list.pop();
 }
 
-void P_right(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-             stack<int_identifier> &operators_list, int c) {
+void P_right(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 << num1;
@@ -178,8 +181,8 @@ void P_right(int num1, int num2, stack<int_identifier> &numbers_list, int_identi
     operators_list.pop();
 }
 
-void P_left(int num1, int num2, stack<int_identifier> &numbers_list, int_identifier &item1,
-            stack<int_identifier> &operators_list, int c) {
+void P_left(int num1, int num2, stack<int_identifier>& numbers_list, int_identifier& item1,
+    stack<int_identifier>& operators_list, int c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
     c = num2 >> num1;
@@ -189,8 +192,8 @@ void P_left(int num1, int num2, stack<int_identifier> &numbers_list, int_identif
     operators_list.pop();
 }
 
-void P_not(int num1, stack<int_identifier> &numbers_list, int_identifier &item1, stack<int_identifier> &operators_list,
-           int c) {
+void P_not(int num1, stack<int_identifier>& numbers_list, int_identifier& item1, stack<int_identifier>& operators_list,
+    int c) {
     c = ~num1;
     item1.ch = '0';
     item1.value = c;
@@ -198,53 +201,84 @@ void P_not(int num1, stack<int_identifier> &numbers_list, int_identifier &item1,
     operators_list.pop();
 }
 
-bool P_maths(stack<int_identifier> &numbers_list, stack<int_identifier> &operators_list, int_identifier &item1) {
+//this method works to calculate all the operations
+
+bool P_maths(stack<int_identifier>& numbers_list, stack<int_identifier>& operators_list, int_identifier& item1) {
     int a, b, c;
     b = 0;
     c = 0;
     a = numbers_list.top().value;
     numbers_list.pop();
     switch (operators_list.top().ch) {
-        case '+':
-            P_sum(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '-':
-            P_difference(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '*':
-            P_prod(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '^':
-            P_xor(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '|':
-            P_or(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '&':
-            P_and(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '>':
-            P_left(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '<':
-            P_right(a, b, numbers_list, item1, operators_list, c);
-            break;
-        case '~':
-            P_not(a, numbers_list, item1, operators_list, c);
-            break;
-        default:
-            cerr << "Error, sth went wrong\n";
-            return false;
+    case '+':
+        P_sum(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '-':
+        P_difference(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '*':
+        P_prod(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '^':
+        P_xor(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '|':
+        P_or(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '&':
+        P_and(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '>':
+        P_left(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '<':
+        P_right(a, b, numbers_list, item1, operators_list, c);
+        break;
+    case '~':
+        P_not(a, numbers_list, item1, operators_list, c);
+        break;
+    default:
+        cerr << "Error, sth went wrong\n";
+        return false;
     }
     return true;
 }
 
-bool
-P_mathsExceptions(stack<int_identifier> &numbers_list, stack<int_identifier> &operators_list, int_identifier &item1) {
+//validation of exceptions
+
+bool P_mathsExceptions(stack<int_identifier>& numbers_list, stack<int_identifier>& operators_list, int_identifier& item1) {
     if (!P_maths(numbers_list, operators_list, item1)) {
         return false;
     }
     return true;
+}
+
+//the method that works to call the calculator from 1 point
+
+void P_calculatorStart() {
+    cout << "To work with some functions use: sin(x), cos(x), tan(x), ctg(x), sinh(x), cosh(x), abs(x), tanh(x), ctgh(x) \n\t\t\t\t ln(x), lg(x), logA(x) (where A is basis( log(8) )), asin(x), acos(x), exp(x)" << endl;
+    cout << " \t\t\t\t (x)! to use factorial, to see oct,bin and hex just input a number and press Enter.\n\n" << endl;
+    while (1) {
+        char mode;
+    label1:
+        std::cout << "Enter working mode: \n For engineer mode enter \"0\" \n For programming mode enter \"1\" \n To exit enter \"e\": ";
+        cin >> mode;
+        if (mode == '1') {
+            cin.ignore();
+            P_calculate();
+        }
+        else if (mode == '0') {
+            cin.ignore();
+            calculate();
+        }
+        else if (mode == 'e') {
+            exit(0);
+        }
+        else {
+            cout << "Wrong working mode! " << endl;
+            goto label1;
+        }
+    }
 }
 
 void P_calculate() {
@@ -298,7 +332,8 @@ void P_calculate() {
             operators.pop();
             cin.ignore();
             continue;
-        } else {
+        }
+        else {
             cout << "Inappropriate expression\n";
             system("pause");
             return;
@@ -307,14 +342,15 @@ void P_calculate() {
     while (!operators.empty()) {
         if (!P_mathsExceptions(numbers, operators, item)) {
             return;
-        } else {
+        }
+        else {
             continue;
         }
     }
     cout << "The answer is: " << numbers.top().value << endl;
     cout << "Hex - " << hex(numbers.top().value) << endl;
     cout << "Oct - " << oct(numbers.top().value) << endl;
-    cout << "Bin - " << bin(numbers.top().value) << endl;
+    cout << "Bin - " << bin(numbers.top().value) << "\n" << endl;
     return;
 }
 
