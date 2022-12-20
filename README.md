@@ -1,10 +1,10 @@
 This console calculator was made by Victor Galkevich and Fyodor Zakharevich, we did a nice work and the calculator's functions are not based on "cmath" library,
 every method was made by us using taylor series and NONE of them using "cmath". There are 2 modes: engineering, programming. Each of them has some special functions and 
 they actually are:
-1) +
-2) -
-3) *
-4)
+1) addition
+2) subtraction
+3) multiplication
+4) division
 5) tan, ctg, sin, cos
 6) atan, actg, asin, acos
 7) all the functions from the 5th point but hyperbolic
@@ -15,3 +15,4 @@ they actually are:
 12) exp
 13) factorial
 All of them u can use in our calculator.
+Our calculator works with long strokes of mathematical expressions.
