@@ -3,6 +3,9 @@
 #include <string>
 using namespace std;
 
+//here we create a struct to analyze a stroke from the user and divide all the elements
+//into functions or numbers, operands
+
 struct identifier {
     char type;
     double value;
@@ -10,12 +13,17 @@ struct identifier {
     identifier() : type(' '), value(0) {};
 };
 
+//getRank helps us to understand what is the prioeity of each function, operation
 
 int getRank(char element);
 
-const double E = 2.71828182846;
+//here we initialise the constants 
 
-const double PI = 3.14159265358979323846;
+constexpr double E = 2.71828182846;
+
+constexpr double PI = 3.14159265358979323846;
+
+//here we declarare all the functions for engineer mode
 
 double Sin(double x);
 
@@ -53,15 +61,11 @@ double logX(double x, int y);
 
 double fast_pow(double x, int n);
 
+//here we declare the functions that link our operations and stacks, in some cases we throw exceptions
+
 void SinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 void absC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
-
-bool hexC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
-
-bool octC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
-
-bool binC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, string c);
 
 void CosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
@@ -80,6 +84,8 @@ bool lgC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<
 void ACosC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
 
 void ASinC(double num1, stack<identifier>& numbers_list, identifier& item1, stack<identifier>& operators_list, double c);
+
+//here the functions for additions into stacks are declared
 
 void add_pi(stack<identifier>& numbers_list, identifier& item1, bool& flag1);
 
@@ -161,11 +167,3 @@ void add_cosh(stack<identifier>& operators_list, identifier& item1);
 
 void calculate();
 
-
-
-struct programming_identifier {
-    int val;
-    char ch;
-    programming_identifier() :val(0), ch(' ') {};
-};
-int programming_getRank(char element);
