@@ -1,5 +1,6 @@
 #include "programming_operations.h"
 #include "functions.h"
+#include "Sort.h"
 
 int P_get_prior(char element) {
     if (element == '~') {
@@ -37,7 +38,7 @@ string hex(double x) {
     }
     int i = 0, j = ans.size() - 1;
     while (i <= j) { // as our stroke was mirrored we reverse all the elements
-        swap(ans[i], ans[j]);
+        swap(ans.at(i), ans.at(j));
         i++;
         j--;
     }
@@ -259,23 +260,23 @@ void P_calculatorStart() {
     cout << "To work with some functions use: sin(x), cos(x), tan(x), ctg(x), sinh(x), cosh(x), abs(x), tanh(x), ctgh(x) \n\t\t\t\t ln(x), lg(x), logA(x) (where A is basis( log(8) )), asin(x), acos(x), exp(x)" << endl;
     cout << " \t\t\t\t (x)! to use factorial, to see oct,bin and hex just input a number and press Enter.\n\n" << endl;
     while (1) {
-        char mode;
+        string mode;
     label1:
-        std::cout << "Enter working mode: \n For engineer mode enter \"0\" \n For programming mode enter \"1\" \n To exit enter \"e\": ";
+        std::cout << "Enter working mode: \n For engineer mode enter \"0\" \n For programming mode enter \"1\" \n To exit enter \"exit\": ";
         cin >> mode;
-        if (mode == '1') {
+        if (mode == "1") {
             cin.ignore();
             P_calculate();
         }
-        else if (mode == '0') {
+        else if (mode == "0") {
             cin.ignore();
             calculate();
         }
-        else if (mode == 'e') {
+        else if (mode == "exit") {
             exit(0);
         }
         else {
-            cout << "Wrong working mode! " << endl;
+            cout << "Wrong working mode!\n " << endl;
             goto label1;
         }
     }
@@ -353,4 +354,3 @@ void P_calculate() {
     cout << "Bin - " << bin(numbers.top().value) << "\n" << endl;
     return;
 }
-
