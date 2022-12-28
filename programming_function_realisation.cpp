@@ -257,8 +257,8 @@ bool P_mathsExceptions(stack<int_identifier>& numbers_list, stack<int_identifier
 //the method that works to call the calculator from 1 point
 
 void P_calculatorStart() {
-    cout << "To work with some functions use: sin(x), cos(x), tan(x), ctg(x), sinh(x), cosh(x), abs(x), tanh(x), ctgh(x) \n\t\t\t\t ln(x), lg(x), logA(x) (where A is basis( log(8) )), asin(x), acos(x), exp(x)" << endl;
-    cout << " \t\t\t\t (x)! to use factorial, to see oct,bin and hex just input a number and press Enter.\n\n" << endl;
+    cout << "To work with some functions use: sin(x), cos(x), tan(x), ctg(x), sinh(x), cosh(x), abs(x), tanh(x), ctgh(x) \n\t\t\t\t ln(x), lg(x), logA(x) (where A is basis( log2(8) )), asin(x), acos(x), exp(x)" << endl;
+    cout << " \t\t\t\t (x)!, upb(x), lwb(x), to see oct,bin and hex just input a number and press Enter.\n\n" << endl;
     while (1) {
         string mode;
     label1:
