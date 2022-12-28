@@ -14,5 +14,8 @@ they actually are:
 11) logA(x), ln(x), lg(x)
 12) exp
 13) factorial
+14) many sort functions
+15) complex numbers
+16) tests
 All of them u can use in our calculator.
 Our calculator works with long strokes of mathematical expressions.
