@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <stack>
@@ -59,4 +61,3 @@ P_mathsExceptions(stack<int_identifier>& numbers_list, stack<int_identifier>& op
 void P_not(int num1, stack<int_identifier>& numbers_list, int_identifier& item1, stack<int_identifier>& operators_list, int c);
 void P_calculate();
 void P_calculatorStart();
-
