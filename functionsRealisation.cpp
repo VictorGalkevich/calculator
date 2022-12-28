@@ -269,6 +269,10 @@ power(double num1, double num2, stack<identifier>& numbers_list, identifier& ite
 }
 
 double powC(double a, double b) {
+    if(a <0){
+        cerr << "Cant use negative value as a base! ";
+        exit(0);
+    }
     static int count = 1;
     static double res = 1;
     static double tmp = 1;
