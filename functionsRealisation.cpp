@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "Sort.h"
 
 //definitions for all the provided functions
 
@@ -115,7 +116,7 @@ double Exp(double x) {
     return (1 + x + fast_pow(x, 2) / 2 + fast_pow(x, 3) / 6 + fast_pow(x, 4) / 24 + fast_pow(x, 5) / 120 +
         fast_pow(x, 6) / 720 +
         fast_pow(x, 7) / 5040 + fast_pow(x, 8) / 40320 + fast_pow(x, 9) / 362880 + fast_pow(x, 10) / 3628800); //just taylor series, nothing special
-} 
+}
 
 double lnX(double x) {
     constexpr double eps = 1.0e-5; // accuracy
@@ -261,7 +262,7 @@ power(double num1, double num2, stack<identifier>& numbers_list, identifier& ite
     double c) {
     num2 = numbers_list.top().value;
     numbers_list.pop();
-    c = powC(num2, num1);
+    c = pow(num2, num1);
     item1.type = '0';
     item1.value = c;
     numbers_list.push(item1);
@@ -269,7 +270,7 @@ power(double num1, double num2, stack<identifier>& numbers_list, identifier& ite
 }
 
 double powC(double a, double b) {
-    if(a <0){
+    if (a < 0) {
         cerr << "Cant use negative value as a base! ";
         exit(0);
     }
@@ -277,7 +278,7 @@ double powC(double a, double b) {
     static double res = 1;
     static double tmp = 1;
     if (count == 100) {
-        int temp = res;
+        const int temp = res;
         if (temp - res <= 0.002) {
             return temp;
         }
