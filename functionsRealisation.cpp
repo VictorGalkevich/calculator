@@ -59,7 +59,12 @@ double tg(double x) {
 }
 
 double upb(double x) {
-    return (int)x + 1;
+    if (x >= 0) {
+        return static_cast<int>(x) + 1;
+    }
+    else {
+        return static_cast<int>(x);
+    }
 }
 
 double Abs(double x) {
@@ -72,7 +77,13 @@ double Abs(double x) {
 }
 
 double lwb(double x) {
-    return (int)x;
+    if (x >= 0) {
+        return static_cast<int>(x);
+    }
+    else {
+        return static_cast<int>(x) - 1;
+    }
+    
 }
 
 double fast_pow(double x, int n) {
