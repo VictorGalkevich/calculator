@@ -1,3 +1,5 @@
+# Console advanced calculator
+
 This console calculator was made by Victor Galkevich and Fyodor Zakharevich, we did a nice work and the calculator's functions are not based on "cmath" library,
 every method was made by us using taylor series and NONE of them using "cmath". There are 2 modes: engineering, programming. Each of them has some special functions and 
 they actually are:
